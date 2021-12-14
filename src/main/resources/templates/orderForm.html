@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Лекарственный сбор</title>
+</head>
+<body>
+
+<form method="POST" th:action="@{/orders}" th:object="${order}">
+    <h1>Закажите свой собственный сбор из лекарственных трав!</h1>
+
+    <img th:src="@{/images/travy.jpg}"/>
+    <a th:href="@{/design}" id="another">Составить еще один сбор</a><br/>
+
+<!--    <ul>-->
+<!--        <li th:each="drugFee : ${order.drugFees}"><span th:text="${drugFee.name}">drugFee name</span></li>-->
+<!--    </ul>-->
+
+    <div th:if="${#fields.hasErrors()}">
+        <span class="validationError">
+        Пожалуйста, исправьте указанные ниже ошибки и отправьте еще раз.
+        </span>
+    </div>
+
+    <h3>Доставьте мой сбор ...</h3>
+    <label for="deliveryName">Имя: </label>
+    <input type="text" th:field="*{deliveryName}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('deliveryName')}"
+          th:errors="*{deliveryName}">Введено неверно</span>
+    <br/>
+
+    <h3>Данные для оплаты: </h3>
+    <!-- tag::validatedField[] -->
+    <label for="ccNumber">Кредитная карта #: </label>
+    <input type="text" th:field="*{ccNumber}"/>
+    <!-- end::allButValidation[] -->
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ccNumber')}"
+          th:errors="*{ccNumber}">CC Num Error</span>
+    <!-- tag::allButValidation[] -->
+    <!-- end::validatedField[] -->
+    <br/>
+
+    <label for="ccExpiration">Дата окончания действия карты: </label>
+    <input type="text" th:field="*{ccExpiration}"/>
+    <!-- end::allButValidation[] -->
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ccExpiration')}"
+          th:errors="*{ccExpiration}">CC Num Error</span>
+    <!-- tag::allButValidation[] -->
+    <br/>
+
+    <label for="ccCVV">CVV: </label>
+    <input type="text" th:field="*{ccCVV}"/>
+    <!-- end::allButValidation[] -->
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ccCVV')}"
+          th:errors="*{ccCVV}">CC Num Error</span>
+    <!-- tag::allButValidation[] -->
+    <br/>
+
+    <input type="submit" value="Submit order"/>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Выбор сбора</title>
+</head>
+<body>
+<h1>Закажите свой собственный сбор!</h1>
+<img th:src="@{/images/des.jpg}"/>
+
+<!-- tag::formTag[] -->
+<form method="POST" th:object="${ticket}">
+    <!-- end::all[] -->
+
+    <span class="validationError"
+          th:if="${#fields.hasErrors('gears')}"
+          th:errors="*{gears}">Ingredient Error</span>
+
+    <!-- tag::all[] -->
+    <div class="grid">
+        <!-- end::formTag[] -->
+        <!-- end::head[] -->
+        <div class="ingredient-group" id="expectorants">
+            <!-- tag::designateWrap[] -->
+            <h3>Выберите леску:</h3>
+            <div th:each="gears : ${expectorants}">
+                <input name="gears" type="checkbox" th:value="${gears.id}" />
+                <span th:text="${gears.name}">INGREDIENT</span><br/>
+            </div>
+            <!-- end::designateWrap[] -->
+        </div>
+
+        <div class="ingredient-group" id="cardiovascular_diseases">
+            <h3>Выберите наживку:</h3>
+            <div th:each="gears : ${cardiovascular_diseases}">
+                <input name="gears" type="checkbox" th:value="${gears.id}" />
+                <span th:text="${gears.name}">INGREDIENT</span><br/>
+            </div>
+        </div>
+
+        <div class="ingredient-group" id="anti_inflammatory">
+            <h3>Выберите снасть:</h3>
+            <!--/*@thymesVar id="anti_inflammatory" type=""*/-->
+            <div th:each="gears : ${anti_inflammatory}">
+                <input name="gears" type="checkbox" th:value="${gears.id}" />
+                <span th:text="${gears.name}">INGREDIENT</span><br/>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+
+        <h3>Укажите название вашего сбора:</h3>
+        <input type="text" th:field="*{name}"/>
+        <!-- end::all[] -->
+<!--        <span th:text="${#fields.hasErrors('name')}">XXX</span>-->
+        <span class="validationError"
+              th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}">Имя введено не корректно.</span>
+        <!-- tag::all[] -->
+        <br/>
+
+        <button>Отправить</button>
+    </div>
+    <!-- tag::closeFormTag[] -->
+</form>
+<!-- end::closeFormTag[] -->
+</body>
+</html>
